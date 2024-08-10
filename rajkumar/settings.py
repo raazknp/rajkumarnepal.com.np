@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import Path, os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rpa5kr@)w5+cf_r))m2yv2d_3&bnyc3il$+9)lj7i^&%=3awq2'
+SECRET_KEY = 'tx!udfro9br9s=qelm1h7=z_dny$ee&=+cc1#+4v_m)ii=@#8)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+MAINTENANCE_MODE = True
 
+ALLOWED_HOSTS = ['rajkumarnepal.com.np','www.rajkumarnepal.com.np', 'localhost','127.0.0.1']
 
 # Application definition
 
@@ -37,9 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'maintenance_mode',
+
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -47,14 +53,37 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'maintenance_mode.middleware.MaintenanceModeMiddleware',
 ]
+
+
+#CORS Headers
+CORS_ALLOWED_ORIGINS = [
+    "https://rajkumarnepal.com.np",
+    "https://www.rajkumarnepal.com.np",
+    "http://localhost:5545",
+    "http://127.0.0.1:5545",
+    "https://fonts.googleapis.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://rajkumarnepal.com.np",
+    "https://www.rajkumarnepal.com.np",
+    "http://localhost:5545",
+    "http://127.0.0.1:5545",
+    "https://fonts.googleapis.com",
+]
+
+
 
 ROOT_URLCONF = 'rajkumar.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kathmandu'
 
 USE_I18N = True
 
@@ -115,8 +144,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+'''
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+'''
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
