@@ -7,10 +7,10 @@ If you want to clone and use this site as your own personal portfolio, feel free
 
 ## Steps to Follow
 
-mkdir personal-site
-cd personal-site
+mkdir personal-site && cd personal-site
 
 python -m venv env
+
 source env/bin/activate
 
 git clone https://github.com/raaznp/rajkumarnepal.com.np.git . //Cloned in same folder
